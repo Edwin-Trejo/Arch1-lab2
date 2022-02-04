@@ -31,7 +31,7 @@ char *word_start(char* str,char delim)
 	 }
 	return str;
 } 
-/* Uses a while loop to and a pointer to traverse the string, the while loop
+/* Uses a while loop and a pointer to traverse the string, the while loop
    will continue until it finds a non delimeter character, then it will
    return the pointer, indicating the end of a word*/
 char *end_word(char* str, char delim)
@@ -41,6 +41,20 @@ char *end_word(char* str, char delim)
 		str++;
 	 }
 	return str;
+}
+
+int count_tokens(char* str, char delim)
+{
+	int count = 0;
+	while(*str)
+	 {
+	  if(*word_start(str, delim) )
+		{
+		 count++;
+		}
+	  *str++;
+	 }
+	return count;
 }
 
 int main()
@@ -57,7 +71,9 @@ int main()
 	printf("Input string: %s", str);
 	
 	//Testing
-        printf("%s\n",*word_start(str , *delim));
+       // printf("%d\n",*word_start(str , *delim));
 	
+	printf("%d\n", count_tokens(str, *delim));	
+
 	return 0;
 }
