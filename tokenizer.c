@@ -23,7 +23,7 @@ bool non_delim_character(char c, char delim)
 /* Uses a while loop and a pointer to traverse the string, the while loop will 
    continue until it finds the next delimeter, then it returns the pointer 
    to that delimeter indicating the start of the next string.*/
-char *world_start(char* str,char delim)
+char *word_start(char* str,char delim)
 {
 	while(delim_character(*str, delim))
 	 {
@@ -31,7 +31,9 @@ char *world_start(char* str,char delim)
 	 }
 	return str;
 } 
-/* Uses a while lo*/
+/* Uses a while loop to and a pointer to traverse the string, the while loop
+   will continue until it finds a non delimeter character, then it will
+   return the pointer, indicating the end of a word*/
 char *end_word(char* str, char delim)
 {
 	while(non_delim_character(*str, delim))
@@ -46,6 +48,7 @@ int main()
 
 	char delim[50];
 	char str[50];
+	//int *p = str;
 	printf("Welcome! Select a delimeter char\n");
 	fgets(delim,50,stdin);
 	printf("Selected delimeter: %s", delim);
@@ -54,7 +57,7 @@ int main()
 	printf("Input string: %s", str);
 	
 	//Testing
-        printf("%d\n",delim_character('&', '&'));
+        printf("%s\n",*word_start(str , *delim));
 	
 	return 0;
 }
