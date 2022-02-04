@@ -53,5 +53,8 @@ int main()
 	fgets(str,50,stdin);
 	printf("Input string: %s", str);
 	
+	//Testing
+        printf("%d\n",delim_character('&', '&'));
+	
 	return 0;
 }
