@@ -21,22 +21,22 @@ bool non_delim_character(char c, char delim)
 }
 
 /* Uses a while loop and a pointer to traverse the string, the while loop will 
-   continue until it finds the next delimeter, then it returns the pointer 
-   to that delimeter indicating the start of the next string.*/
+   continue until it finds a non delimeter char, then it returns the pointer 
+   to that char  indicating the start of the string.*/
 char *word_start(char* str,char delim)
 {
-	while(delim_character(*str, delim))
+	while(non_delim_character(*str, delim))
 	 {
 		str++;
 	 }
 	return str;
 } 
 /* Uses a while loop and a pointer to traverse the string, the while loop
-   will continue until it finds a non delimeter character, then it will
+   will continue until it finds a delimeter character, then it will
    return the pointer, indicating the end of a word*/
 char *end_word(char* str, char delim)
 {
-	while(non_delim_character(*str, delim))
+	while(delim_character(*str, delim))
 	 {
 		str++;
 	 }
