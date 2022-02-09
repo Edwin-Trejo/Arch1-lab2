@@ -25,7 +25,7 @@ bool non_delim_character(char c, char delim)
    to that char  indicating the start of the string.*/
 char *word_start(char* str,char delim)
 {
-	while(non_delim_character(*str, delim))
+	while(delim_character(*str, delim))
 	 {
 		str++;
 	 }
@@ -36,7 +36,7 @@ char *word_start(char* str,char delim)
    return the pointer, indicating the end of a word*/
 char *end_word(char* str, char delim)
 {
-	while(delim_character(*str, delim))
+	while(non_delim_character(*str, delim))
 	 {
 		str++;
 	 }
