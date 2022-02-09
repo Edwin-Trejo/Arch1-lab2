@@ -57,6 +57,20 @@ int count_tokens(char* str, char delim)
 	return count;
 }
 
+char *copy_str(char *inStr, short len, char delim)
+{
+	return delim;
+}
+
+char** tokenize(char* str, char delim)
+{
+	return str;
+}
+
+void print_all_tokens(char** tokens)
+{
+}
+
 int main()
 {
 
