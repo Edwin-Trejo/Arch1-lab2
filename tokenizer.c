@@ -29,7 +29,7 @@ char *word_start(char* str,char delim)
 	 {
 		str++;
 	 }
-	printf("first char %c", *str);
+//	printf("first char %c", *str);
 	return str;
 } 
 /* Uses a while loop and a pointer to traverse the string, the while loop
@@ -47,11 +47,29 @@ char *end_word(char* str, char delim)
 int count_tokens(char* str, char delim)
 {
 	int count = 0;
-	char* p = str;
-	/*while(*str){
-	
-	}*/
-	//printf("first char %d",);
+	*str +=1;
+//	bool valid= false;
+//	char* p = *word_start(str, delim);
+
+	while(*str)
+	{
+		if(delim_character(*str, delim))
+		 {
+			printf("%c\n",*str);
+	    		count++;
+			str++;
+		 }
+		if(*str+1 == '\0')
+		 {
+			count++;
+		 }
+		else
+	 	 {
+			str++;
+		 }
+	} 
+	printf("count: %d\n", count);
+
 	return count;
 }
 /*
@@ -83,9 +101,9 @@ int main()
 	printf("Input string: %s", str);
 	
 	//Testing
-        *word_start(str , *delim);
+//        *word_start(str , *delim);
 	
-//	printf("%d\n", count_tokens(str, *delim));	
+	 count_tokens(str, *delim);
 
 	return 0;
 }
