@@ -44,6 +44,11 @@ char *end_word(char* str, char delim)
 	return str;
 }
 
+/*This method first checks if the string is empty, if it is it returns 0, if
+  its NOT empty it uses a while loop to go through the string looking for
+  delim characters, if it finds one it adds one to the count, meaning a word
+  ended there, therefore there is one more word to count.*/
+
 int count_tokens(char* str, char delim)
 {
 	if(str[1] == '\0'){return 0;}
@@ -64,6 +69,11 @@ int count_tokens(char* str, char delim)
 
 	return count;
 }
+/*First it  allocates memory using malloc, it needs to know the lenght of the
+  string in order to know how much memory will be needed. After that, it uses
+  a for loop to copy each char of the string. Lastly it makes the last element
+  the zero terminator. 
+*/
 
 char *copy_str(char *inStr, short len, char delim)
 {
@@ -77,12 +87,23 @@ char *copy_str(char *inStr, short len, char delim)
 	copy[len] = '\0';
 	return copy;
 }
-/*
+
 char** tokenize(char* str, char delim)
 {
-	
+	int words = count_tokens(str, delim);
+	char **tokens = (char**)malloc((words + 1) * sizeof(char*));
+
+	for(int i = 0; i < words; i++)
+	 {
+		char* start = word_start(str,delim); //start pointing to the start of the word
+		str = end_word(start,delim); //str pointing to the end of the word
+
+		tokens[i] = copy_str(start, str - start, delim); //start of the pointer, size of the word, delimeter
+	 }
+	tokens[words] = '\0'; //last element zero terminator
+	return tokens;
 }
-*/
+
 void print_all_tokens(char** tokens)
 {
 }
