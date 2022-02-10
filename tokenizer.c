@@ -53,7 +53,6 @@ int count_tokens(char* str, char delim)
 	{
 		if(delim_character(*str, delim))
 		 {
-			printf("%c\n",*str);
 	    		count++;
 			str++;
 		 }
@@ -65,12 +64,20 @@ int count_tokens(char* str, char delim)
 
 	return count;
 }
-/*
+
 char *copy_str(char *inStr, short len, char delim)
 {
-	
-}
+	char *copy = (char*)malloc((len+1) * sizeof(char));
 
+	for(int i = 0; i < len; i++)
+	 {
+		copy[i] = inStr[i];
+	 }
+
+	copy[len] = '\0';
+	return copy;
+}
+/*
 char** tokenize(char* str, char delim)
 {
 	
