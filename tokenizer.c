@@ -46,11 +46,9 @@ char *end_word(char* str, char delim)
 
 int count_tokens(char* str, char delim)
 {
-	int count = 0;
+	if(str[1] == '\0'){return 0;}
+	int count = 1;
 	*str +=1;
-//	bool valid= false;
-//	char* p = *word_start(str, delim);
-
 	while(*str)
 	{
 		if(delim_character(*str, delim))
@@ -59,16 +57,11 @@ int count_tokens(char* str, char delim)
 	    		count++;
 			str++;
 		 }
-		if(*str+1 == '\0')
-		 {
-			count++;
-		 }
 		else
 	 	 {
 			str++;
 		 }
-	} 
-	printf("count: %d\n", count);
+	}
 
 	return count;
 }
@@ -103,7 +96,7 @@ int main()
 	//Testing
 //        *word_start(str , *delim);
 	
-	 count_tokens(str, *delim);
+	printf("count: %d\n", count_tokens(str, *delim));
 
 	return 0;
 }
