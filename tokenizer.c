@@ -51,9 +51,8 @@ char *end_word(char* str, char delim)
 
 int count_tokens(char* str, char delim)
 {
-	if(str[1] == '\0'){return 0;}
+	if(str[0] == '\0'){return 0;} //checks if string is empty
 	int count = 1;
-	*str +=1;
 	while(*str)
 	{
 		if(delim_character(*str, delim))
@@ -84,7 +83,7 @@ char *copy_str(char *inStr, short len, char delim)
 		copy[i] = inStr[i];
 	 }
 
-	copy[len] = '\0';
+	copy[len] = '\0'; //zero terminator last element
 	return copy;
 }
 
@@ -100,31 +99,43 @@ char** tokenize(char* str, char delim)
 
 		tokens[i] = copy_str(start, str - start, delim); //start of the pointer, size of the word, delimeter
 	 }
-	tokens[words] = '\0'; //last element zero terminator
+//	tokens[words] = '\0'; //last element zero terminator
 	return tokens;
 }
 
 void print_all_tokens(char** tokens)
 {
+	int count = 0;
+	char **temp = tokens;
+	if(*tokens == 0)
+	 {
+		printf("String is empty\n");
+	 }
+	while(*temp)
+	 {
+		printf("Tokens[%d]:",count);
+		printf("%s\n", *temp);
+		count++;
+	 	temp++;
+	 }
 }
 
 int main()
 {
 
-	char delim[50];
+	char delim[1];
 	char str[50];
-	//int *p = str;
+
 	printf("Welcome! Select a delimeter char\n");
 	fgets(delim,50,stdin);
 	printf("Selected delimeter: %s", delim);
 	printf("Enter the input string\n");
 	fgets(str,50,stdin);
 	printf("Input string: %s", str);
-	
+
 	//Testing
-//        *word_start(str , *delim);
 	
-	printf("count: %d\n", count_tokens(str, *delim));
+	print_all_tokens(tokenize(str,*delim));
 
 	return 0;
 }
