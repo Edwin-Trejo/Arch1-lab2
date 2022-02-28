@@ -136,6 +136,6 @@ int main()
 	//Testing
 	
 	print_all_tokens(tokenize(str,*delim));
-
+//	print_all_tokens(tokenize(str, ' '));	
 	return 0;
 }

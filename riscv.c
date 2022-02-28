@@ -31,6 +31,17 @@ void init_regs(){
  * as a parameter to this function.
  */
 bool interpret(char* instr){
+	char* tokenized_instr = tokenize(instr, ' ');
+	while(*tokenized_instr)
+	{
+		printf("%s\n", *tokenized_instr);
+		*tokenized_instr
+	}
+
+	if(*instr == 0)
+	 {
+		return false;
+	 }
 	return true;
 }
 
@@ -78,8 +89,11 @@ int main(){
 
 	print_regs();
 
+
+
+
 	// Below is a sample program to a write-read. Overwrite this with your own code.
-	write_read_demo();
+//	write_read_demo();
 
 	printf(" RV32 Interpreter.\nType RV32 instructions. Use upper-case letters and space as a delimiter.\nEnter 'EOF' character to end program\n");
 
