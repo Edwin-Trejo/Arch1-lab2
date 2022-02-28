@@ -113,9 +113,9 @@ void print_all_tokens(char** tokens)
 	 }
 	while(*temp)
 	 {
-		printf("Tokens[%d]:",count);
+		//printf("Tokens[%d]:",count);
 		printf("%s\n", *temp);
-		count++;
+		//count++;
 	 	temp++;
 	 }
 }
@@ -123,15 +123,15 @@ void print_all_tokens(char** tokens)
 int main()
 {
 
-	char delim[1];
+	char delim[1] = {' '};
 	char str[50];
 
-	printf("Welcome! Select a delimeter char\n");
-	fgets(delim,50,stdin);
-	printf("Selected delimeter: %s", delim);
+//	printf("Welcome! Select a delimeter char\n");
+//	fgets(delim,50,stdin);
+//	printf("Selected delimeter: %s", delim);
 	printf("Enter the input string\n");
 	fgets(str,50,stdin);
-	printf("Input string: %s", str);
+//	printf("Input string: %s", str);
 
 	//Testing
 	
