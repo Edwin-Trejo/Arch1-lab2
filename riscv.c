@@ -11,6 +11,7 @@ int32_t* reg; // Array of 32 32-bit registers
 void init_regs();
 bool interpret(char* instr);
 void write_read_demo();
+int stringToInt(char* str);
 //char** tokenize(char* str, const char delim);
 
 /**
@@ -39,9 +40,31 @@ bool interpret(char* instr){
 	char* addi = "ADDI";
 
 	if(*token == *add){
+		int destination;
+		int source;
+		int immediate;
 		printf("this is add: %s\n", token);
 		token = strtok(NULL, " ");
 		printf("this is next: %s\n", token);
+		token++;
+		printf("this is next: %s\n", token);
+		destination = stringToInt(token);
+		token = strtok(NULL, " ");
+		printf("this is next: %s\n", token);
+		token++;
+		source = stringToInt(token);
+		token = strtok(NULL, " ");
+		immediate = stringToInt(token);
+
+
+		printf("destination: %d\n",reg[destination]);
+		reg[destination] += reg[source];
+		printf("destination: %d\n",reg[destination]);
+		reg[destination] += immediate;
+		
+		
+		return true;
+	
 	}
 	 else if(*token == *addi){
 		
@@ -66,6 +89,15 @@ bool interpret(char* instr){
 		return false;
 	 }
 	return true;
+}
+
+int stringToInt(char* str)
+{
+	int output = 0;
+	for (int i = 0; str[i] != '\0'; ++i){
+		output = output * 10 + str[i] - '0';
+	}
+	return output;
 }
 
 
@@ -114,7 +146,7 @@ int main(){
 
 	
 	// Below is a sample program to a write-read. Overwrite this with your own code.
-	//write_read_demo();
+//	write_read_demo();
 
 	printf(" RV32 Interpreter.\nType RV32 instructions. Use upper-case letters and space as a delimiter.\nEnter 'EOF' character to end program\n");
 
