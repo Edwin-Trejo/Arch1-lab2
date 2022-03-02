@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include "tokenizer.h"
 
 /* If c is equal to the delimeter (delim) it will return true*/
 bool delim_character(char c, char delim)

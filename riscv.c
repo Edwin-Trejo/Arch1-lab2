@@ -4,12 +4,14 @@
 #include <stdint.h> // use guaranteed 64-bit integers
 #include "tokenizer.h" // Create header file and reference that
 #include "memory.h" // built-in functions to read and write to a specific file
+#include <string.h>
 
 int32_t* reg; // Array of 32 32-bit registers
 
 void init_regs();
 bool interpret(char* instr);
 void write_read_demo();
+//char** tokenize(char* str, const char delim);
 
 /**
  * Initialize register array for usage.
@@ -31,13 +33,34 @@ void init_regs(){
  * as a parameter to this function.
  */
 bool interpret(char* instr){
-	char* tokenized_instr = tokenize(instr, ' ');
-	while(*tokenized_instr)
-	{
-		printf("%s\n", *tokenized_instr);
-		*tokenized_instr
+//	const char delim[2] = " ";
+	char* token = strtok(instr," "); 
+	char* add = "ADD";
+	char* addi = "ADDI";
+
+	if(*token == *add){
+		printf("this is add: %s\n", token);
+		token = strtok(NULL, " ");
+		printf("this is next: %s\n", token);
+	}
+	 else if(*token == *addi){
+		
 	}
 
+/*
+	while( token != NULL ) {
+		printf(" %s\n", token);
+		token = strtok(NULL, " ");
+	}
+*/
+/*	char** tokens = tokenize(instr, ' ');
+	char **temp = tokens;
+	while(*temp)
+	{
+		printf("%s\n", *temp);
+		temp++;
+	}
+*/
 	if(*instr == 0)
 	 {
 		return false;
@@ -89,11 +112,9 @@ int main(){
 
 	print_regs();
 
-
-
-
+	
 	// Below is a sample program to a write-read. Overwrite this with your own code.
-//	write_read_demo();
+	//write_read_demo();
 
 	printf(" RV32 Interpreter.\nType RV32 instructions. Use upper-case letters and space as a delimiter.\nEnter 'EOF' character to end program\n");
 
