@@ -11,7 +11,7 @@ int32_t* reg; // Array of 32 32-bit registers
 void init_regs();
 bool interpret(char* instr);
 void write_read_demo();
-int stringToInt(char* str);
+long int stringToInt(char* str);
 //char** tokenize(char* str, const char delim);
 
 /**
@@ -38,52 +38,63 @@ bool interpret(char* instr){
 	char* token = strtok(instr," "); 
 	char* add = "ADD";
 	char* addi = "ADDI";
-
+	printf("reg3: %d\n",reg[3]);
 	if(*token == *add){
-		int destination;
-		int source;
-		int immediate;
+		long int destination;
+		long int data1;
+		long int data2;
 		printf("this is add: %s\n", token);
 		token = strtok(NULL, " ");
-		printf("this is next: %s\n", token);
 		token++;
-		printf("this is next: %s\n", token);
+		printf("this is destination: %s\n", token);
 		destination = stringToInt(token);
+
 		token = strtok(NULL, " ");
-		printf("this is next: %s\n", token);
 		token++;
-		source = stringToInt(token);
+		printf("this is source: %s\n", token);
+		data1 = stringToInt(token);
+
 		token = strtok(NULL, " ");
-		immediate = stringToInt(token);
-
-
-		printf("destination: %d\n",reg[destination]);
-		reg[destination] += reg[source];
-		printf("destination: %d\n",reg[destination]);
-		reg[destination] += immediate;
+		token++;
+		printf("this is immediate: %s\n", token);
+		data2 = stringToInt(token);
 		
-		
+		printf("data1: %ld\n",data1);
+		printf("data2: %ld\n",data2);
+		long int result = reg[data1] + reg[data2];
+		reg[destination] += result;
+		printf("total sum: %ld",result);
+
 		return true;
-	
+
 	}
 	 else if(*token == *addi){
-		
+		long int destination;
+		long int source;
+		long int immediate;
+		printf("this is addi: %s\n", token);
+
+		token = strtok(NULL, " ");
+		token++;
+		printf("this is destination: %s\n", token);
+		destination = stringToInt(token);
+
+		token = strtok(NULL, " ");
+		token++;
+		printf("this is source: %s\n", token);
+		source = stringToInt(token);
+
+		//token = strtok(NULL, " ");
+		token--;
+		printf("this is immediate: %s\n", token);
+		immediate = stringToInt(token);
+
+		long int result = reg[source] + immediate;
+		reg[destination] += result;
+
+		return true;
 	}
 
-/*
-	while( token != NULL ) {
-		printf(" %s\n", token);
-		token = strtok(NULL, " ");
-	}
-*/
-/*	char** tokens = tokenize(instr, ' ');
-	char **temp = tokens;
-	while(*temp)
-	{
-		printf("%s\n", *temp);
-		temp++;
-	}
-*/
 	if(*instr == 0)
 	 {
 		return false;
@@ -91,13 +102,23 @@ bool interpret(char* instr){
 	return true;
 }
 
-int stringToInt(char* str)
+long int stringToInt(char* str)
 {
-	int output = 0;
-	for (int i = 0; str[i] != '\0'; ++i){
-		output = output * 10 + str[i] - '0';
+	long int num = 0;
+	int i = 0;
+
+	int sign = 1; //number sign, starts as positive
+	if(str[0] == '-'){	//if the first char is a negative sign, then
+		sign = -1;	//sign = -1;
+		i++;		//move to the next char
 	}
-	return output;
+
+	while (str[i] && (str[i] >= '0' && str[i] <= '9')) //iterates until str == false, or char is a non number
+	{
+		num = num * 10 + (str[i] - '0'); //get numerical value with '0'
+		i++;				//multiply num * 10 to shuffle digits left to update total
+	}
+	return num * sign; //multiply num by sign depending on its value -1(negative) or 1(positive)
 }
 
 
