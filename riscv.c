@@ -12,7 +12,8 @@ void init_regs();
 bool interpret(char* instr);
 void write_read_demo();
 long int stringToInt(char* str);
-//char** tokenize(char* str, const char delim);
+int define_operation(char* str);
+
 
 /**
  * Initialize register array for usage.
@@ -34,73 +35,106 @@ void init_regs(){
  * as a parameter to this function.
  */
 bool interpret(char* instr){
-//	const char delim[2] = " ";
-	char* token = strtok(instr," "); 
-	char* add = "ADD";
-	char* addi = "ADDI";
-	printf("reg3: %d\n",reg[3]);
-	if(*token == *add){
+	char* token = strtok(instr," "); //tokenize the input string
+
+	int operation = define_operation(instr); //define the operation type (ADD, ADDI, etc)
+
+	if(operation == 1){	//1 == ADD
 		long int destination;
 		long int data1;
 		long int data2;
 		printf("this is add: %s\n", token);
-		token = strtok(NULL, " ");
-		token++;
+		token = strtok(NULL, " ");	//moves pointer to the next token
+		token++;			//skips the X character in the string
 		printf("this is destination: %s\n", token);
-		destination = stringToInt(token);
+		destination = stringToInt(token); //atoi function to convert string to int
 
 		token = strtok(NULL, " ");
 		token++;
-		printf("this is source: %s\n", token);
+		printf("this is data1: %s\n", token);
 		data1 = stringToInt(token);
 
 		token = strtok(NULL, " ");
 		token++;
-		printf("this is immediate: %s\n", token);
+		printf("this is data2: %s\n", token);
 		data2 = stringToInt(token);
-		
-		printf("data1: %ld\n",data1);
-		printf("data2: %ld\n",data2);
-		long int result = reg[data1] + reg[data2];
-		reg[destination] += result;
+
+		long int result = reg[data1] + reg[data2]; //adds values from the registers we are adding
+		reg[destination] += result; //adds the result to the destination reg
 		printf("total sum: %ld",result);
 
 		return true;
 
 	}
-	 else if(*token == *addi){
+	 else if(operation == 2){	//2 == ADDI
 		long int destination;
 		long int source;
 		long int immediate;
 		printf("this is addi: %s\n", token);
 
-		token = strtok(NULL, " ");
-		token++;
+		token = strtok(NULL, " ");		//moves pointer to the next token
+		token++;				//skips X character in string
 		printf("this is destination: %s\n", token);
-		destination = stringToInt(token);
+		destination = stringToInt(token);	//atoi function to convert from string to int
 
 		token = strtok(NULL, " ");
 		token++;
 		printf("this is source: %s\n", token);
 		source = stringToInt(token);
 
-		//token = strtok(NULL, " ");
-		token--;
+		token = strtok(NULL, " ");
 		printf("this is immediate: %s\n", token);
 		immediate = stringToInt(token);
+		
 
-		long int result = reg[source] + immediate;
-		reg[destination] += result;
+		long int result = reg[source] + immediate; //adds the value in reg[source] to the immediate value
+
+		reg[destination] = result; //replace the value of reg[destination] with result
+		printf("result: %ld\n",result);
 
 		return true;
 	}
 
-	if(*instr == 0)
+	if(*instr == 0) //returns 0 if the input is invalid
 	 {
+		printf("Not valid input \n");
 		return false;
 	 }
 	return true;
 }
+
+int define_operation(char* str)
+{
+	char* add = "ADD";
+	char* addi = "ADDI";
+	char* original_str = str;
+
+	while(*str){
+		if(*str != *add){	//if *str != *add exits the while loop
+			break;
+		}
+		str++;
+		add++;
+	}
+	if(*str == *add){	//if last character matches then returns 1 (ADD)
+		return 1;
+	}
+	str = original_str;	//resets pointer
+	while(*str){
+		if(*str != *addi){	//if *str != *addi exits the loop
+			break;
+		}
+		str++;
+		addi++;
+	}
+	if(*str== *addi){	//if las characters match returns 2(ADDI)
+		return 2;
+	}
+	str = original_str;	//resets pointer
+return 0;
+
+}
+
 
 long int stringToInt(char* str)
 {
@@ -129,8 +163,8 @@ long int stringToInt(char* str)
  * Use 0x before an int in C to hardcode it as text, but you may enter base 10 as you see fit.
  */
 void write_read_demo(){
-	int32_t data_to_write = 0xFFF; // equal to 4095
-	int32_t address = 0x98; // equal to 152
+	int32_t data_to_write = 0x111; // equal to 4095
+	int32_t address = 0x01; // equal to 152
 	char* mem_file = "mem.txt";
 
 	// Write 4095 (or "0000000 00000FFF") in the 20th address (address 152 == 0x98)
@@ -167,9 +201,9 @@ int main(){
 
 	
 	// Below is a sample program to a write-read. Overwrite this with your own code.
-//	write_read_demo();
+	write_read_demo();
 
-	printf(" RV32 Interpreter.\nType RV32 instructions. Use upper-case letters and space as a delimiter.\nEnter 'EOF' character to end program\n");
+	printf(" RV32 Interpreter.\nType RV32 instructions. Use upper-case letters and space as a delimiter.\nEnter 'CTRL + D' to end program\n");
 
 
 	char* instruction = malloc(1000 * sizeof(char));
