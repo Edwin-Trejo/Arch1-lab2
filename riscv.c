@@ -11,9 +11,9 @@ int32_t* reg; // Array of 32 32-bit registers
 void init_regs();
 bool interpret(char* instr);
 void write_read_demo();
-long int stringToInt(char* str);
-int define_operation(char* str);
-
+long int stringToInt(char* str);	//Atoi function
+int define_operation(char* str);	//sets the type of operation we are performing (ADD, ADDI, LW)
+int32_t decimal_to_hex(long int in);
 
 /**
  * Initialize register array for usage.
@@ -43,7 +43,7 @@ bool interpret(char* instr){
 		long int destination;
 		long int data1;
 		long int data2;
-		printf("this is add: %s\n", token);
+		printf("You selected: %s\n", token);
 		token = strtok(NULL, " ");	//moves pointer to the next token
 		token++;			//skips the X character in the string
 		printf("this is destination: %s\n", token);
@@ -70,7 +70,7 @@ bool interpret(char* instr){
 		long int destination;
 		long int source;
 		long int immediate;
-		printf("this is addi: %s\n", token);
+		printf("You selected: %s\n", token);
 
 		token = strtok(NULL, " ");		//moves pointer to the next token
 		token++;				//skips X character in string
@@ -91,7 +91,8 @@ bool interpret(char* instr){
 
 		reg[destination] = result; //replace the value of reg[destination] with result
 		printf("result: %ld\n",result);
-
+	
+		
 		return true;
 	}
 	else if(operation == 3) {	//LW == 3
@@ -197,6 +198,7 @@ long int stringToInt(char* str)
 }
 
 
+
 /**
  * Simple demo program to show the usage of read_address() and write_address() found in memory.c
  * Before and after running this program, look at mem.txt to see how the values change.
@@ -240,12 +242,9 @@ int main(){
 
 	print_regs();
 
-	
-	// Below is a sample program to a write-read. Overwrite this with your own code.
-	write_read_demo();
 
-	printf(" RV32 Interpreter.\nType RV32 instructions. Use upper-case letters and space as a delimiter.\nEnter 'CTRL + D' to end program\n");
 
+	printf(" RV32 Interpreter.\nType RV32 instructions.Use upper-case letters and space as a delimiter.\nEnter 'CTRL + D' to end program\n");
 
 	char* instruction = malloc(1000 * sizeof(char));
 	bool is_null = false;
