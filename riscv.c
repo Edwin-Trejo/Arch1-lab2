@@ -94,7 +94,34 @@ bool interpret(char* instr){
 
 		return true;
 	}
+	else if(operation == 3) {	//LW == 3
+		long int destination;
+		long int source;
+		long int immediate;
+		printf("this is LW: %s\n", token);
 
+		token = strtok(NULL, " ");		//moves pointer to the next token
+		token++;				//skips X character in string
+		printf("this is destination: %s\n", token);
+		destination = stringToInt(token);	//atoi function to convert from string to int
+
+		token = strtok(NULL, " ");
+		token++;
+		printf("this is source: %s\n", token);
+		source = stringToInt(token);
+
+		token = strtok(NULL, " ");
+		printf("this is immediate: %s\n", token);
+		immediate = stringToInt(token);
+		
+
+		long int result = reg[source] + immediate; //adds the value in reg[source] to the immediate value
+
+		reg[destination] = result; //replace the value of reg[destination] with result
+		printf("result: %ld\n",result);
+
+		return true;	
+	}
 	if(*instr == 0) //returns 0 if the input is invalid
 	 {
 		printf("Not valid input \n");
@@ -107,6 +134,7 @@ int define_operation(char* str)
 {
 	char* add = "ADD";
 	char* addi = "ADDI";
+	char* lw = "LW";
 	char* original_str = str;
 
 	while(*str){
@@ -131,6 +159,19 @@ int define_operation(char* str)
 		return 2;
 	}
 	str = original_str;	//resets pointer
+	
+	while(*str){
+		if(*str != *lw){	//if different exit the loop
+			break;
+		}
+		str++;
+		addi++;
+	}
+	if(*str == *lw){	//if las character match returns 3(LW)
+		return 3;
+	}
+	str = original_str; //resets pointer
+	
 return 0;
 
 }
